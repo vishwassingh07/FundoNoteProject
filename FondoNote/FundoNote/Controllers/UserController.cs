@@ -14,7 +14,8 @@ namespace FundoNote.Controllers
         {
             this.userBL = userBL;
         }
-        [HttpPost("Register")]
+        [HttpPost]
+        [Route("Register")]
         public ActionResult Registration(UserRegistrationModel userRegistration)
         {
             try
@@ -35,7 +36,8 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-        [HttpPost("Login")]
+        [HttpPost]
+        [Route("Login")]
         public ActionResult Login(UserLoginModel userLogin)
         {
             try
