@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FundoNote.Controllers
 {
@@ -73,6 +75,31 @@ namespace FundoNote.Controllers
                 {
                     return BadRequest(new { success = false, message = "Resent Link Could Not Be Generated" });
                 }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("ResetPassword")]
+        public ActionResult ResetPassword(string Password, string ConfirmPassword)
+        {
+            try
+            {
+                var Email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+
+                if (userBL.ResetPassword(Email, Password, ConfirmPassword))
+                {
+                    return Ok(new { success = true, message = "Reset Password Link Successfully Sent" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Reset Password Link Could Not Be Sent" });
+                }
+
             }
             catch (System.Exception)
             {

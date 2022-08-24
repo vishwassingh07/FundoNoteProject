@@ -30,6 +30,9 @@ namespace CommonLayer.Model
             string token = msg.Body.ToString();
             string subject = "FundoNotes Token Link";
             string body = token;
+
+
+
             var SMTP = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
