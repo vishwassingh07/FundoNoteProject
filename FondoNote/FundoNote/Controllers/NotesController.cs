@@ -64,5 +64,28 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult UpdateNote(NotesPostModel notesPostModel, long NotesId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NoteUpdate(notesPostModel,UserID, NotesId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Notes Successfully Updated", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Notes Could Not Be Updated" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

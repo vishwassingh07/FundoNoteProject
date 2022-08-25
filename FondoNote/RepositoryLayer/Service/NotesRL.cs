@@ -78,6 +78,32 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-     
+        public NotesEntity NoteUpdate(NotesPostModel notesUpdate, long UserId, long NotesId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if(result != null)
+                {
+                    result.Title = notesUpdate.Title;
+                    result.Description = notesUpdate.Description;
+                    result.colour = notesUpdate.colour;
+                    result.Reminder = notesUpdate.Reminder;
+                    result.Image = notesUpdate.Image;
+                    result.EditedTime = DateTime.Now;
+                    fundoContext.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
