@@ -1,11 +1,10 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+
 
 namespace FundoNote.Controllers
 {
