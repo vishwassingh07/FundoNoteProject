@@ -39,6 +39,9 @@ namespace FundoNote
             services.AddControllers();
             services.AddTransient<IUserRL, UserRL>();
             services.AddTransient<IUserBL, UserBL>();
+
+            services.AddTransient<INotesBL, NotesBL>();
+            services.AddTransient<INotesRL, NotesRL>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(opt =>
             {
