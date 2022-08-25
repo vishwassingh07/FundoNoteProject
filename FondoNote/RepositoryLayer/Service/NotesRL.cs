@@ -56,6 +56,28 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool NoteDelete(long UserId, long NotesId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if(result != null)
+                {
+                    fundoContext.NotesTable.Remove(result);
+                    this.fundoContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
      
     }
 }

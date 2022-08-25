@@ -41,6 +41,28 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult DeleteNote(long NoteId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NoteDelete(UserID, NoteId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Notes Successfully Deleted", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Notes Could Not Be Deleted" });
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
     }
 }

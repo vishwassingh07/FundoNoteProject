@@ -15,11 +15,24 @@ namespace BusinessLayer.Service
         {
             this.notesRL = notesRL;
         }
+
         public NotesEntity NotesPost(NotesPostModel notesPost, long UserId)
         {
             try
             {
                 return notesRL.NotePost(notesPost, UserId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool NoteDelete(long UserId, long NotesId)
+        {
+            try
+            {
+                return notesRL.NoteDelete(UserId, NotesId);
             }
             catch (Exception)
             {

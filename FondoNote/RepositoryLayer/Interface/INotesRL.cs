@@ -10,5 +10,6 @@ namespace RepositoryLayer.Interface
     public interface INotesRL
     {
         public NotesEntity NotePost(NotesPostModel notesPost, long UserId);
+        public bool NoteDelete(long UserId,long NotesId);
     }
 }
