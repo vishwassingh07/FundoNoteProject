@@ -87,5 +87,28 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        [Route("Retrieve")]
+        public ActionResult RetrieveNote(long UserId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NotesRetrieve(UserID);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Notes Successfully Retrieved", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Notes Could Not Be Retrieved" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

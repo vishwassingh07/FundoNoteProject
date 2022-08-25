@@ -11,5 +11,6 @@ namespace BusinessLayer.Interface
         public NotesEntity NotesPost(NotesPostModel notesPost, long UserId);
         public bool NoteDelete(long UserId, long NotesId);
         public NotesEntity NoteUpdate(NotesPostModel notesUpdate, long UserId, long NotesId);
+        public IEnumerable<NotesEntity> NotesRetrieve(long UserId);
     }
 }
