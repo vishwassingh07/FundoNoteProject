@@ -142,5 +142,29 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool NoteArchive(long UserId, long NotesId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if(result.Archive == true)
+                {
+                    result.Archive = false;
+                    fundoContext.SaveChanges();
+                    return false;
+                }
+                else
+                {  
+                    result.Archive = true;
+                    fundoContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
