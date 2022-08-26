@@ -1,4 +1,7 @@
-﻿using CommonLayer.Model;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
@@ -14,11 +17,13 @@ namespace RepositoryLayer.Service
     {
         private readonly FundoContext fundoContext;
         private readonly IConfiguration _Appsettings;
+        private readonly IConfiguration cloudinaryEntity;
         public object UserId { get; private set; }
-        public NotesRL(FundoContext fundoContext, IConfiguration _Appsettings)
+        public NotesRL(FundoContext fundoContext, IConfiguration _Appsettings, IConfiguration cloudinaryEntity)
         {
             this.fundoContext = fundoContext;
             this._Appsettings = _Appsettings;
+            this.cloudinaryEntity = cloudinaryEntity;
         }
         public NotesEntity NotePost(NotesPostModel notesPost, long UserId)
         {
@@ -182,6 +187,40 @@ namespace RepositoryLayer.Service
                     result.Trash = true;
                     fundoContext.SaveChanges();
                     return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string NoteUploadImage(IFormFile image,long UserId, long NotesId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if(result != null)
+                {
+                    Account clooudaccount = new Account(
+                        cloudinaryEntity["CloudinarySettings:cloud_name"],
+                        cloudinaryEntity["CloudinarySettings:api_key"],
+                        cloudinaryEntity["CloudinarySettings:api_secret"]
+                        );
+                    Cloudinary cloudinary = new Cloudinary(clooudaccount);
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(image.FileName, image.OpenReadStream()),
+                    };
+                    var uploadResult = cloudinary.Upload(uploadParams);
+                    string imagePath = uploadResult.Url.ToString();
+                    result.Image = imagePath;
+                    fundoContext.SaveChanges();
+                    return "Successfully Uploaded The Image";
+                }
+                else
+                {
+                    return null;
                 }
             }
             catch (Exception)

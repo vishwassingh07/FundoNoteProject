@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
@@ -93,6 +94,18 @@ namespace BusinessLayer.Service
             try
             {
                 return notesRL.NoteTrash(UserId, NotesId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string NoteUploadImage(IFormFile image, long UserId, long NotesId)
+        {
+            try
+            {
+                return notesRL.NoteUploadImage(image, UserId, NotesId);
             }
             catch (Exception)
             {

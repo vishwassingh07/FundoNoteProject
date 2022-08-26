@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -179,6 +180,29 @@ namespace FundoNote.Controllers
                 else
                 {
                     return BadRequest(new { success = false, message = "Operation Failed" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPut]
+        [Route("Image")]
+        public ActionResult ImageUpload(IFormFile image, long NoteId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NoteUploadImage(image, UserID, NoteId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Successfully Uploaded The Image", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Could Not Upload The Image" });
                 }
             }
             catch (Exception)
