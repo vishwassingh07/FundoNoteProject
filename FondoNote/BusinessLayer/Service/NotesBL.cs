@@ -64,5 +64,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public bool NotePin(long NotesId, long UserId)
+        {
+            try
+            {
+                return notesRL.NotePin(NotesId, UserId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

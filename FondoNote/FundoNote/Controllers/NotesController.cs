@@ -10,7 +10,7 @@ namespace FundoNote.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotesController:ControllerBase
+    public class NotesController : ControllerBase
     {
         private readonly INotesBL notesBL;
         public NotesController(INotesBL notesBL)
@@ -49,7 +49,7 @@ namespace FundoNote.Controllers
             {
                 long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
                 var result = notesBL.NoteDelete(UserID, NoteId);
-                if(result != null)
+                if (result != null)
                 {
                     return Ok(new { success = true, message = "Notes Successfully Deleted", data = result });
                 }
@@ -71,7 +71,7 @@ namespace FundoNote.Controllers
             try
             {
                 long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
-                var result = notesBL.NoteUpdate(notesPostModel,UserID, NotesId);
+                var result = notesBL.NoteUpdate(notesPostModel, UserID, NotesId);
                 if (result != null)
                 {
                     return Ok(new { success = true, message = "Notes Successfully Updated", data = result });
@@ -109,6 +109,30 @@ namespace FundoNote.Controllers
 
                 throw;
             }
+        }
+        [HttpPut]
+        [Route("Pin")]
+        public ActionResult PinNote(long NotesId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NotePin(NotesId, UserID);
+                if (result != false)
+                {
+                    return Ok(new { success = true, message = "Successfully Pinned The Note" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Note Pin Failed" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

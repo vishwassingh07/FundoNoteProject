@@ -25,7 +25,7 @@ namespace RepositoryLayer.Service
             try
             {
                 NotesEntity notes = new NotesEntity();
-                var result = fundoContext.NotesTable.FirstOrDefault(x=> x.UserId == UserId);
+                var result = fundoContext.NotesTable.FirstOrDefault(x => x.UserId == UserId);
                 notes.UserId = UserId;
                 notes.Title = notesPost.Title;
                 notes.Description = notesPost.Description;
@@ -40,7 +40,7 @@ namespace RepositoryLayer.Service
 
                 fundoContext.NotesTable.Add(notes);
                 int res = fundoContext.SaveChanges();
-                if(res > 0)
+                if (res > 0)
                 {
                     return notes;
                 }
@@ -48,7 +48,7 @@ namespace RepositoryLayer.Service
                 {
                     return null;
                 }
-                
+
             }
             catch (Exception)
             {
@@ -61,7 +61,7 @@ namespace RepositoryLayer.Service
             try
             {
                 var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
-                if(result != null)
+                if (result != null)
                 {
                     fundoContext.NotesTable.Remove(result);
                     this.fundoContext.SaveChanges();
@@ -83,7 +83,7 @@ namespace RepositoryLayer.Service
             try
             {
                 var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
-                if(result != null)
+                if (result != null)
                 {
                     result.Title = notesUpdate.Title;
                     result.Description = notesUpdate.Description;
@@ -111,6 +111,30 @@ namespace RepositoryLayer.Service
             {
                 var result = fundoContext.NotesTable.Where(x => x.UserId == UserId);
                 return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool NotePin(long NotesId, long UserId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if (result.Pin == true)
+                {
+                    result.Pin = false;
+                    fundoContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    result.Pin = true;
+                    fundoContext.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception)
             {
