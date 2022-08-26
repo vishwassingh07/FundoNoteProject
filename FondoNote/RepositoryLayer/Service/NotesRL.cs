@@ -166,5 +166,29 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool NoteTrash(long UserId, long NotesId)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.UserId == UserId && x.NotesId == NotesId).FirstOrDefault();
+                if (result.Trash == true)
+                {
+                    result.Trash = false;
+                    fundoContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    result.Trash = true;
+                    fundoContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

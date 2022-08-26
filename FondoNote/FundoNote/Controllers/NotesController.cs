@@ -135,7 +135,7 @@ namespace FundoNote.Controllers
         }
         [HttpPut]
         [Route("Archive")]
-        public IActionResult ArchiveNote(long noteId)
+        public ActionResult ArchiveNote(long noteId)
         {
 
             try
@@ -159,7 +159,33 @@ namespace FundoNote.Controllers
             {
                 throw;
             }
+        }
+        [HttpPut]
+        [Route("Trash")]
+        public ActionResult TrashNote(long NotesId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NoteTrash(UserID, NotesId);
+                if (result != false)
+                {
+                    return Ok(new { success = true, message = "Successfully Trashed The Note" });
+                }
+                else if (result != true)
+                {
+                    return Ok(new { success = true, message = "Could Not Trashed The Note" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Operation Failed" });
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
     }
 }
