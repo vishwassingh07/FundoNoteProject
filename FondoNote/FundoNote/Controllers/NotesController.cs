@@ -213,5 +213,28 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpPut]
+        [Route("ColourChange")]
+        public ActionResult ColourChange(long NotesId, string Colour)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = notesBL.NoteColourChange(UserID, Colour);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Successfully Changed The Colour", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Could Not Changed The Colour" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

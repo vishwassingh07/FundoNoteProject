@@ -229,5 +229,27 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public NotesEntity NoteColourChange(long NotesId, string Colour)
+        {
+            try
+            {
+                var result = fundoContext.NotesTable.Where(x => x.NotesId == NotesId).FirstOrDefault();
+                if (result != null)
+                {
+                    result.colour = Colour;
+                    fundoContext.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

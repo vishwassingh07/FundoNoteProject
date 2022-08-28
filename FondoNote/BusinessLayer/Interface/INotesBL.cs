@@ -17,7 +17,9 @@ namespace BusinessLayer.Interface
         public bool NoteArchive(long UserId, long NotesId);
         public bool NoteTrash(long UserId, long NotesId);
         public string NoteUploadImage(IFormFile image, long UserId, long NotesId);
-        
+        public NotesEntity NoteColourChange(long NotesId, string Colour);
+
+
 
     }
 }
