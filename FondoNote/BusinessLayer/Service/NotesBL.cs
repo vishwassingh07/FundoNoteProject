@@ -65,7 +65,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool NotePin(long NotesId, long UserId)
+        public NotesEntity NotePin(long NotesId, long UserId)
         {
             try
             {
@@ -113,5 +113,6 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+      
     }
 }

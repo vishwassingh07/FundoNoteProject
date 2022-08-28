@@ -123,7 +123,7 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool NotePin(long NotesId, long UserId)
+        public NotesEntity NotePin(long NotesId, long UserId)
         {
             try
             {
@@ -132,13 +132,13 @@ namespace RepositoryLayer.Service
                 {
                     result.Pin = false;
                     fundoContext.SaveChanges();
-                    return false;
+                    return result;
                 }
                 else
                 {
                     result.Pin = true;
                     fundoContext.SaveChanges();
-                    return true;
+                    return null;
                 }
             }
             catch (Exception)
