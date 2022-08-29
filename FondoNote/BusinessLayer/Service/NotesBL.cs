@@ -77,7 +77,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool NoteArchive(long UserId, long NotesId)
+        public NotesEntity NoteArchive(long UserId, long NotesId)
         {
             try
             {

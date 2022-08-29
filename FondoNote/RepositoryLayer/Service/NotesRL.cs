@@ -147,7 +147,7 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool NoteArchive(long UserId, long NotesId)
+        public NotesEntity NoteArchive(long UserId, long NotesId)
         {
             try
             {
@@ -156,13 +156,13 @@ namespace RepositoryLayer.Service
                 {
                     result.Archive = false;
                     fundoContext.SaveChanges();
-                    return false;
+                    return result;
                 }
                 else
                 {  
                     result.Archive = true;
                     fundoContext.SaveChanges();
-                    return true;
+                    return null;
                 }
             }
             catch (Exception)
