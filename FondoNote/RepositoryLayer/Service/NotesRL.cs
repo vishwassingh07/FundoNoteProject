@@ -156,13 +156,14 @@ namespace RepositoryLayer.Service
                 {
                     result.Archive = false;
                     fundoContext.SaveChanges();
-                    return result;
+                    return null;
                 }
                 else
                 {  
                     result.Archive = true;
                     fundoContext.SaveChanges();
-                    return null;
+
+                    return result;
                 }
             }
             catch (Exception)
