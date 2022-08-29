@@ -135,9 +135,8 @@ namespace FundoNote.Controllers
         }
         [HttpPut]
         [Route("Archive")]
-        public IActionResult ArchiveNote(long noteId)
+        public ActionResult ArchiveNote(long noteId)
         {
-
             try
             {
                 long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
