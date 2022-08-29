@@ -145,13 +145,13 @@ namespace FundoNote.Controllers
             {
                 long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
                 var result = notesBL.NoteArchive(noteId, userID);
-                if (result != false)
+                if (result != null)
                 {
-                    return Ok(new { success = true, message = "Successfully Archived The Note" });
+                    return Ok(new { success = true, message = "Successfully Archived The Note", data = result});
                 }
-                else if(result !=true)
+                else if(result == null)
                 {
-                    return Ok(new { success = true, message = "Could Not Archived The Note" });
+                    return Ok(new { success = true, message = "Could Not Archived The Note", data = result });
                 }
                 else
                 {

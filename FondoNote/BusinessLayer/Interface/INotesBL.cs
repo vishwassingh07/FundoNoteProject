@@ -14,7 +14,7 @@ namespace BusinessLayer.Interface
         public NotesEntity NoteUpdate(NotesPostModel notesUpdate, long UserId, long NotesId);
         public IEnumerable<NotesEntity> NotesRetrieve(long UserId);
         public NotesEntity NotePin(long NotesId, long UserId);
-        public bool NoteArchive(long UserId, long NotesId);
+        public NotesEntity NoteArchive(long UserId, long NotesId);
         public bool NoteTrash(long UserId, long NotesId);
         public string NoteUploadImage(IFormFile image, long UserId, long NotesId);
         public NotesEntity NoteColourChange(long NotesId, string Colour);
