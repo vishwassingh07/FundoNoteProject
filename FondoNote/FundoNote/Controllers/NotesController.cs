@@ -146,11 +146,11 @@ namespace FundoNote.Controllers
                 var result = notesBL.NoteArchive(noteId, userID);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Successfully Archived The Note", data = result });
+                    return Ok(new { success = true, message = "Successfully Archived The Notes", data = result });
                 }
                 else if(result != result)
                 {
-                    return Ok(new { success = true, message = "Could Not Archived The Note" });
+                    return Ok(new { success = true, message = "Could Not Archived The Notes" });
                 }
                 else
                 {
