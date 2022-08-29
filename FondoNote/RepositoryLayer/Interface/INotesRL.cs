@@ -13,8 +13,6 @@ namespace RepositoryLayer.Interface
         public bool NoteDelete(long UserId,long NotesId);
         public NotesEntity NoteUpdate(NotesPostModel notesUpdate, long UserId, long NotesId);
         public IEnumerable<NotesEntity> NotesRetrieve(long UserId);
-        public bool NotePin(long NotesId, long UserId);
-
-
+        public NotesEntity NotePin(long NotesId, long UserId);
     }
 }

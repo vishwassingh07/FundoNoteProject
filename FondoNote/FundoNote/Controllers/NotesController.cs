@@ -118,9 +118,9 @@ namespace FundoNote.Controllers
             {
                 long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
                 var result = notesBL.NotePin(NotesId, UserID);
-                if (result != false)
+                if (result != null)
                 {
-                    return Ok(new { success = true, message = "Successfully Pinned The Note" });
+                    return Ok(new { success = true, message = "Successfully Pinned The Note" , data = result});
                 }
                 else
                 {
