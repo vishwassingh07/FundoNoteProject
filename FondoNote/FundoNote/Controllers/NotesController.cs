@@ -121,7 +121,6 @@ namespace FundoNote.Controllers
                 var result = notesBL.NotePin(NotesId, UserID);
                 if (result != null)
                 {
-<<<<<<< HEAD
                     return Ok(new {success = true, message = "Successfully Pinned The Note" , data = result});
                 }
                 else if(result == null)
@@ -152,9 +151,6 @@ namespace FundoNote.Controllers
                 else if (result == null)
                 {
                     return Ok(new { success = true, message = "Could Not Archived The Note", data = result });
-=======
-                    return Ok(new { success = true, message = "Successfully Pinned The Note" , data = result});
->>>>>>> NotePin
                 }
                 else
                 {
