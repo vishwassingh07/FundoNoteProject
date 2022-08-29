@@ -139,6 +139,7 @@ namespace RepositoryLayer.Service
                     result.Pin = true;
                     fundoContext.SaveChanges();
                     return null;
+<<<<<<< HEAD
                 }
             }
             catch (Exception)
@@ -188,6 +189,8 @@ namespace RepositoryLayer.Service
                     result.Trash = true;
                     fundoContext.SaveChanges();
                     return true;
+=======
+>>>>>>> NotePin
                 }
             }
             catch (Exception)

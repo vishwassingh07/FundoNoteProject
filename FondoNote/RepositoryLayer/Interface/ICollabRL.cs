@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RepositoryLayer.Interface
 {
-    internal interface ICollabRL
+    public interface ICollabRL
     {
     }
 }

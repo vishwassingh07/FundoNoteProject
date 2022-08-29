@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLayer.Interface
 {
-    internal interface ICollabBL
+    public interface ICollabBL
     {
     }
 }

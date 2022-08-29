@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
-    internal class CollabBL
+    public class CollabBL
     {
     }
 }
