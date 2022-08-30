@@ -45,5 +45,27 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public string DeleteCollab(long collabId, string email)
+        {
+            try
+            {
+                var collabeTable = fundoContext.CollabTable.Where(x => x.CollabEmail == email && x.CollabId == collabId).FirstOrDefault();
+                if(collabeTable != null)
+                {
+                    fundoContext.CollabTable.Remove(collabeTable);
+                    fundoContext.SaveChanges();
+                    return "Successfully Deleted The Collaborator";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
