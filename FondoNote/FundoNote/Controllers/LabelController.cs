@@ -38,5 +38,28 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult DeleteLabel(long labelId, long noteId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = labelBL.LabelDelete(UserID, noteId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Label Successfully Deleted", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Label Could Not Be Deleted" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

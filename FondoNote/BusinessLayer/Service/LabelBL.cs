@@ -26,5 +26,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public string LabelDelete(long labelId, long noteId)
+        {
+            try
+            {
+                return labelRL.LabelDelete(labelId, noteId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
