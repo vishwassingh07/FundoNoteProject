@@ -22,7 +22,7 @@ namespace FundoNote.Controllers
         {
             try
             {
-                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                //long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
                 var result = collabBL.AddCollab(noteId, email);
                 if(result != null)
                 {
@@ -54,6 +54,29 @@ namespace FundoNote.Controllers
                 else
                 {
                     return BadRequest(new { success = false, message = "Collaborator Could Not Be Deleted" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        [Route("Retrieve")]
+        public ActionResult RetrieveCollab(long noteId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = collabBL.RetrieveCollab(UserID);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Notes Successfully Retrieved", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Notes Could Not Be Retrieved" });
                 }
             }
             catch (Exception)

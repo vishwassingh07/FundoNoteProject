@@ -28,8 +28,8 @@ namespace RepositoryLayer.Service
                 {
                     CollabEntity collab = new CollabEntity();
                     collab.UserId = userModel.UserId;
-                    collab.NotesId = noteId;
-                    collab.CollabEmail = email;
+                    collab.NotesId = notesModel.NotesId;
+                    collab.CollabEmail = userModel.Email;
                     fundoContext.Add(collab);
                     fundoContext.SaveChanges();
                     return collab;
@@ -60,6 +60,19 @@ namespace RepositoryLayer.Service
                 {
                     return null;
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public IEnumerable<CollabEntity> RetrieveCollab(long noteId)
+        {
+            try
+            {
+                var result = fundoContext.CollabTable.Where(x => x.NotesId == noteId);
+                return result;
             }
             catch (Exception)
             {
