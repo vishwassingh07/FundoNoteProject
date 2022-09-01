@@ -89,5 +89,29 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("Retrieve")]
+        public ActionResult RetrieveLabel(long noteId)
+        {
+            try
+            {
+                long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
+                var result = labelBL.LabelRetrieve(noteId,UserID);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Label Successfully Retrieved", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Label Could Not Be Retrieved" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

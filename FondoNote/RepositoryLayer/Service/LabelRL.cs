@@ -87,5 +87,18 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public IEnumerable<LabelEntity> LabelRetrieve(long noteId, long userId)
+        {
+            try
+            {
+                var result = fundoContext.LabelTable.Where(x => x.NotesId == noteId && x.UserId == userId).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

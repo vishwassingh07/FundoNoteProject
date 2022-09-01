@@ -50,5 +50,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public IEnumerable<LabelEntity> LabelRetrieve(long noteId, long userId)
+        {
+            try
+            {
+                return labelRL.LabelRetrieve(noteId,userId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
