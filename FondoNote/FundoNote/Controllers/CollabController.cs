@@ -69,7 +69,7 @@ namespace FundoNote.Controllers
             try
             {
                 long UserID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserID").Value);
-                var result = collabBL.RetrieveCollab(UserID);
+                var result = collabBL.RetrieveCollab(noteId, UserID);
                 if (result != null)
                 {
                     return Ok(new { success = true, message = "Notes Successfully Retrieved", data = result });

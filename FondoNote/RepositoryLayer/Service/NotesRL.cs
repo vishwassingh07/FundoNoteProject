@@ -29,8 +29,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                NotesEntity notes = new NotesEntity();
-                var result = fundoContext.NotesTable.FirstOrDefault(x => x.UserId == UserId);
+                NotesEntity notes = new NotesEntity();             
                 notes.UserId = UserId;
                 notes.Title = notesPost.Title;
                 notes.Description = notesPost.Description;

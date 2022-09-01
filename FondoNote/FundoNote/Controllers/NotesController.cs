@@ -3,9 +3,17 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using RepositoryLayer.Context;
+using RepositoryLayer.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
@@ -14,9 +22,15 @@ namespace FundoNote.Controllers
     public class NotesController : ControllerBase
     {
         private readonly INotesBL notesBL;
-        public NotesController(INotesBL notesBL)
+        private readonly IMemoryCache memoryCache;
+        private readonly FundoContext fundocontext;
+        private readonly IDistributedCache distributedCache;
+        public NotesController(INotesBL notesBL, IMemoryCache memoryCache, FundoContext fundocontext, IDistributedCache distributedCache)
         {
             this.notesBL = notesBL;
+            this.memoryCache = memoryCache;
+            this.fundocontext = fundocontext;
+            this.distributedCache = distributedCache;
         }
         [Authorize]
         [HttpPost]
@@ -42,6 +56,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpDelete]
         [Route("Delete")]
         public ActionResult DeleteNote(long NoteId)
@@ -65,6 +80,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("Update")]
         public ActionResult UpdateNote(NotesPostModel notesPostModel, long NotesId)
@@ -88,6 +104,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpGet]
         [Route("Retrieve")]
         public ActionResult RetrieveNote(long UserId)
@@ -111,6 +128,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("Pin")]
         public ActionResult PinNote(long NotesId)
@@ -136,6 +154,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("Archive")]
         public ActionResult ArchiveNote(long noteId)
@@ -162,6 +181,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("Trash")]
         public ActionResult TrashNote(long NotesId)
@@ -189,6 +209,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("Image")]
         public ActionResult ImageUpload(IFormFile image, long NoteId)
@@ -212,6 +233,7 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPut]
         [Route("ColourChange")]
         public ActionResult ColourChange(long NotesId, string Colour)
@@ -234,6 +256,31 @@ namespace FundoNote.Controllers
 
                 throw;
             }
+        }
+        [Authorize]
+        [HttpGet("redis")]
+        public async Task<IActionResult> GetAllNotesUsingRedisCache()
+        {
+            var cacheKey = "NotesList";
+            string serializedNotesList;
+            var notesList = new List<NotesEntity>();
+            var redisNotesList = await distributedCache.GetAsync(cacheKey);
+            if (redisNotesList != null)
+            {
+                serializedNotesList = Encoding.UTF8.GetString(redisNotesList);
+                notesList = JsonConvert.DeserializeObject<List<NotesEntity>>(serializedNotesList);
+            }
+            else
+            {
+                notesList = await fundocontext.NotesTable.ToListAsync();
+                serializedNotesList = JsonConvert.SerializeObject(notesList);
+                redisNotesList = Encoding.UTF8.GetBytes(serializedNotesList);
+                var options = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                await distributedCache.SetAsync(cacheKey, redisNotesList, options);
+            }
+            return Ok(notesList);
         }
     }
 }

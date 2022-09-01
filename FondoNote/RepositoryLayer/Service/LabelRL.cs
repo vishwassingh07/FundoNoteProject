@@ -12,11 +12,9 @@ namespace RepositoryLayer.Service
     public class LabelRL : ILabelRL
     {
         private readonly FundoContext fundoContext;
-        private readonly IConfiguration configuration;
-        public LabelRL(FundoContext fundoContext, IConfiguration configuration)
+        public LabelRL(FundoContext fundoContext)
         {
             this.fundoContext = fundoContext;
-            this.configuration = configuration;
         }
         public LabelEntity LabelCreate(long userId, long noteId, string labelName)
         {

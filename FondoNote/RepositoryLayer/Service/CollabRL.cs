@@ -12,11 +12,9 @@ namespace RepositoryLayer.Service
     public class CollabRL : ICollabRL
     {
         private readonly FundoContext fundoContext;
-        private readonly IConfiguration configuration;
-        public CollabRL(FundoContext fundoContext, IConfiguration configuration)
+        public CollabRL(FundoContext fundoContext)
         {
             this.fundoContext = fundoContext;
-            this.configuration = configuration;
         }
         public CollabEntity AddCollab(long noteId, string email)
         {
@@ -67,11 +65,11 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public IEnumerable<CollabEntity> RetrieveCollab(long noteId)
+        public IEnumerable<CollabEntity> RetrieveCollab(long noteId, long userId)
         {
             try
             {
-                var result = fundoContext.CollabTable.Where(x => x.NotesId == noteId);
+                var result = fundoContext.CollabTable.Where(x => x.NotesId == noteId && x.UserId == userId);
                 return result;
             }
             catch (Exception)
